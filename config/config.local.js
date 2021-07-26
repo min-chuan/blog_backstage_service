@@ -14,6 +14,12 @@ module.exports = () => {
     // 注意点: 如果需要使用时间戳, 那么就必须指定当前的时区, 否则会相差8个小时
     timezone: '+08:00',
   };
+  // 禁用CSRF安全校验
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+  };
 
   return config;
 };

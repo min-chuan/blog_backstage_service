@@ -7,11 +7,14 @@
     "declarations": true
   },
   "dependencies": {
+    "crypto": "^1.0.1",
     "egg": "^2.15.1",
     "egg-scripts": "^2.11.0",
     "egg-sequelize": "^6.0.0",
     "egg-validate": "^2.0.2",
-    "mysql2": "^2.2.5"
+    "encrypto": "^1.0.6",
+    "mysql2": "^2.2.5",
+    "svg-captcha": "^1.4.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",
