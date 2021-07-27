@@ -3,12 +3,13 @@ const Controller = require('egg').Controller;
 const svgCaptcha = require('svg-captcha');
 
 class UserController extends Controller {
-  createImageCode(ctx) {
+  createImageCode() {
+    const { ctx } = this;
     // 1.生成验证码
     const c = svgCaptcha.create({
       size: 4, // 验证码长度
       width: 120, // 验证码图片宽度
-      height: 40, // 验证码图片高度
+      height: 42, // 验证码图片高度
       fontSize: 50, // 验证码文字大小
       ignoreChars: '0oO1ilI', // 验证码字符中排除内容 0o1i
       noise: 4, // 干扰线条的数量
@@ -22,9 +23,11 @@ class UserController extends Controller {
       expire: Date.now() + 60 * 1000, // 验证码1分钟之后过期
     };
     // 3.将验证码发送给客户端
-    return c.data;
+    ctx.response.type = 'image/svg+xml';
+    ctx.body = c.data;
   }
-  verifyImageCode(ctx, clientCode) {
+  verifyImageCode(clientCode) {
+    const { ctx } = this;
     // 1.取出服务端中保存的验证码和过期时间
     if (!ctx.session.captcha) {
       ctx.throw(400, '请重新获取验证码');

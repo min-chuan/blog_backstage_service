@@ -3,21 +3,17 @@
 module.exports = app => {
   const { STRING, DATE, INTEGER } = app.Sequelize;
 
-  const User = app.model.define('user', {
+  const Tag = app.model.define('tag', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: INTEGER,
     },
-    username: {
-      type: STRING,
+    name: {
       allowNull: false,
       unique: true,
-    },
-    password: {
       type: STRING,
-      allowNull: false,
     },
     createdAt: {
       type: DATE,
@@ -29,5 +25,5 @@ module.exports = app => {
     },
   });
 
-  return User;
+  return Tag;
 };

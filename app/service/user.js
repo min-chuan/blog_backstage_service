@@ -3,7 +3,17 @@
 const Service = require('egg').Service;
 
 class UserService extends Service {
-
+  async getUser(params) {
+    const { ctx } = this;
+    const { username, password } = params;
+    // 校验用户名和密码
+    const passwordText = ctx.helper.encryptText(password);
+    const result = await ctx.model.User.findOne({ where: { username, password: passwordText } });
+    if (!result) {
+      ctx.throw(400, '用户名或密码错误');
+    }
+    return result;
+  }
   async create(params) {
     const { ctx } = this;
     const { username, password } = params;
@@ -17,6 +27,11 @@ class UserService extends Service {
       ctx.throw(400, '用户名已存在');
     }
   }
+  // async isExist(params) {
+  //   const { ctx } = this;
+  //   const result = await ctx.model.User.findOne({ where: params });
+  //   return !!result;
+  // }
 }
 
 module.exports = UserService;
