@@ -27,11 +27,6 @@ class UserService extends Service {
       ctx.throw(400, '用户名已存在');
     }
   }
-  // async isExist(params) {
-  //   const { ctx } = this;
-  //   const result = await ctx.model.User.findOne({ where: params });
-  //   return !!result;
-  // }
 }
 
 module.exports = UserService;

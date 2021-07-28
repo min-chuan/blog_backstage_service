@@ -1,18 +1,26 @@
 'use strict';
 
 module.exports = app => {
-  const { STRING, DATE, INTEGER } = app.Sequelize;
+  const { STRING, DATE, INTEGER, TEXT } = app.Sequelize;
 
-  const Tag = app.model.define('tag', {
+  const Article = app.model.define('article', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: INTEGER,
     },
-    name: {
-      allowNull: false,
+    title: {
       unique: true,
+      allowNull: false,
+      type: STRING,
+    },
+    content: {
+      allowNull: false,
+      type: TEXT,
+    },
+    abstract: {
+      allowNull: false,
       type: STRING,
     },
     createdAt: {
@@ -25,10 +33,10 @@ module.exports = app => {
     },
   });
 
-  Tag.associate = function() {
-    app.model.Tag.belongsToMany(app.model.ArticleTag, {
+  Article.associate = function() {
+    app.model.Article.belongsToMany(app.model.ArticleTag, {
       through: app.model.ArticleTag,
     });
   };
-  return Tag;
+  return Article;
 };

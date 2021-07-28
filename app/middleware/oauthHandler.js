@@ -1,10 +1,11 @@
 'use strict';
 const jwt = require('jsonwebtoken');
 module.exports = (options, app) => {
-  return async function errorHandler(ctx, next) {
+  return async function oauthHandler(ctx, next) {
     const { excludePathList } = options;
     const currentPath = ctx.url;
-    if (excludePathList.includes(currentPath)) {
+    const isExclude = excludePathList.some(path => new RegExp(`${path}`, 'g').test(currentPath));
+    if (isExclude) {
       /* 不需要权限的路由 */
       await next();
     } else {
@@ -14,7 +15,7 @@ module.exports = (options, app) => {
       });
       if (token) {
         try {
-          await jwt.verify(token, app.config.keys);
+          jwt.verify(token, app.config.keys);
           await next();
         } catch (e) {
           ctx.throw(401, '未登录');

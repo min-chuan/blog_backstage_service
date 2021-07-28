@@ -1,14 +1,15 @@
 'use strict';
 const UserValidate = require('./../validate/user');
-const Controller = require('./common');
+const Controller = require('egg').Controller;
 const jwt = require('jsonwebtoken');
 
 class UserController extends Controller {
-  async index() {
+  // 登录
+  async login() {
     const { ctx } = this;
     const data = ctx.request.body;
-    ctx.validate(UserValidate.index, data);
-    this.verifyImageCode(data.qrcode); // 继承过来的方法
+    ctx.validate(UserValidate.login, data);
+    ctx.helper.verifyImageCaptcha(ctx, data.qrcode);
     const result = await ctx.service.user.getUser(data);
     // 创建token
     const user = result.dataValues;
@@ -24,6 +25,7 @@ class UserController extends Controller {
     ctx.success = 200;
     ctx.body = user;
   }
+  // 创建用户
   async create() {
     const { ctx } = this;
     const data = ctx.request.body;

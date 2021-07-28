@@ -1,5 +1,5 @@
 'use strict';
-const index = {
+const login = {
   username: {
     type: 'string',
     required: true,
@@ -28,6 +28,6 @@ const create = {
 };
 
 module.exports = {
-  index,
+  login,
   create,
 };

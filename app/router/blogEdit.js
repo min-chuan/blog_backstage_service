@@ -2,5 +2,5 @@
 
 module.exports = app => {
   const { router, controller } = app;
-  router.get('/api/v1/common/captcha', controller.common.createImageCaptcha);
+  router.post('/api/v1/blogEdit/release', controller.blogEdit.release);
 };
