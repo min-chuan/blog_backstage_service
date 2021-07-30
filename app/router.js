@@ -7,5 +7,6 @@ module.exports = app => {
   require('./router/common')(app);
   require('./router/user')(app);
   require('./router/tag')(app);
+  require('./router/article')(app);
   require('./router/blogEdit')(app);
 };
